@@ -8,8 +8,8 @@ jobs:
   run-test:
     runs-on: ubuntu-20.04
 
-    container:
-      image: pytorch/pytorch:2.1.0-cuda12.1-cudnn8-runtime
+    #container:
+    #  image: pytorch/pytorch:2.1.0-cuda12.1-cudnn8-runtime
 
     steps:
       - uses: actions/checkout@v4
@@ -26,9 +26,3 @@ jobs:
         run: |
           mkdir -p docs/_static/htmlcov
           cp -r htmlcov/* docs/_static/htmlcov/
-
-      - name: Upload Coverage
-        uses: actions/upload-artifact@v4
-        with:
-          name: coverage-report
-          path: docs/_static/htmlcov/
