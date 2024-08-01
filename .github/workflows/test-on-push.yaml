@@ -1,0 +1,36 @@
+name: Run PyTest
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  run-test:
+    runs-on: ubuntu-20.04
+
+    container:
+      image: pytorch/pytorch:2.1.0-cuda12.1-cudnn8-runtime
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Test with pytest
+        run: pytest tests --doctest-modules --cov=src --cov-report=html
+
+      - name: Copy HTML Coverage Report to Docs
+        run: |
+          mkdir -p docs/_static/htmlcov
+          cp -r htmlcov/* docs/_static/htmlcov/
+
+      - name: Commit and Push Coverage Report
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cd $GITHUB_WORKSPACE
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add docs/_static/htmlcov/
+          git commit -m "Update coverage report"
+          git push
