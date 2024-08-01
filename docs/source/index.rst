@@ -10,7 +10,7 @@ Welcome to Dummy's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-
+`Coverage <_static/htmlcov/index.html>`_
 
 Indices and tables
 ==================
