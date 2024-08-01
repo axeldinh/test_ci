@@ -27,10 +27,11 @@ jobs:
           mkdir -p docs/_static/htmlcov
           cp -r htmlcov/* docs/_static/htmlcov/
 
-      - name: Push coverage report
+      - name: Commit coverage report
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
+          git add docs/_static/htmlcov/
           git commit -a -m "Commit Coverage Report"
 
       - name: Push changes
